@@ -133,6 +133,7 @@
             <a href="/">หน้าแรก</a>
             <a href="/login">เข้าสู่ระบบ</a>
             <a href="/register">สมัครสมาชิก</a>
+            <a href="/activities">เพิ่มกิจกรรม</a>
         <?php } elseif ($current_page === "templat/login_get.php") { ?>
             <a href="/">หน้าแรก</a>
             <a href="/register">สมัครสมาชิก</a>
@@ -148,6 +149,7 @@
             <a href="/">หน้าแรก</a>
             <a href="/login">เข้าสู่ระบบ</a>
             <a href="/register">สมัครสมาชิก</a>
+            <a href="/activities">เพิ่มกิจกรรม</a>
         <?php } ?>
     </nav>
 

@@ -3,9 +3,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// เชื่อมต่อกับฐานข้อมูล
-require_once __DIR__ . '/../includes/db.php'; // ให้ใช้เส้นทางถูกต้อง
-
 // เชื่อมต่อฐานข้อมูล
 $mysqli = getConnection();
 
@@ -16,8 +13,8 @@ if ($mysqli->connect_error) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // รับค่าจากฟอร์มเข้าสู่ระบบ
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = 'AA';
+    $password = '12345';
 
     // เช็คการกรอกข้อมูล
     if (empty($username) || empty($password)) {

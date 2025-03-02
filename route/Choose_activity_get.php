@@ -1,3 +1,4 @@
 <?php
-    renderView('Choose_activity_get');
-?>
+    $activitise = getActivities();
+    renderView('Choose_activity_get' , ['activitise' => $activitise]);
+?>  
