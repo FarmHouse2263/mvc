@@ -12,9 +12,12 @@
 
     <?php
     $activities = getActivities();
+    $users = email($email);
     ?>
-    <div class="container mt-5">
+    <div class="container ">
         <h2 class="text-center">รายการกิจกรรม</h2>
+        <span><?= htmlspecialchars($users['email']) ?></span>
+
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -37,5 +40,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
+                    
 </html>
