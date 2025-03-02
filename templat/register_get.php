@@ -1,0 +1,127 @@
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+?>
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="css\all.css"> -->
+    <title>สมัครสมาชิก</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            display: flex;  
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(90deg, #3498db, #1d6fa5);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .register-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background-color: #2ecc71;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #27ae60;
+        }
+
+        .login-link {
+            margin-top: 10px;
+            display: block;
+            color: #2ecc71;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-container {
+            animation: slideDown 0.8s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-container">
+        <h2>สมัครสมาชิก</h2>
+        <form action="/register" method="post">
+            <input type="text" name="username" placeholder="ชื่อผู้ใช้" required>
+            <input type="email" name="email" placeholder="อีเมล" required>
+            <input type="password" name="password" placeholder="รหัสผ่าน" required>
+            <input type="password" name="confirm_password" placeholder="ยืนยันรหัสผ่าน" required>
+            <input type="date" name="birthday" placeholder="วันเกิด" required>
+            <input type="tel" name="phone_number" placeholder="หมายเลขโทรศัพท์" required>
+            <button type="submit" class="btn">สมัครสมาชิก</button>
+        </form>
+        <a href="/login" class="login-link">มีบัญชีแล้ว? เข้าสู่ระบบ</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #74ebd5, #acb6e5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+/* Header styles */
+header {
+    background: linear-gradient(90deg, #3498db, #1d6fa5);
+    color: white;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.nav-links {
+    margin-top: 10px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 16px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content Layout */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 80px; /* เพิ่มระยะห่างจาก header */
+    padding: 15px;
+    text-align: center;
+}
+
+/* Login container styles */
+.login-container {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 320px;
+    animation: fadeIn 0.8s ease-in-out;
+    margin-top: 100px;
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.btn {
+    background: linear-gradient(90deg, #3498db, #1d6fa5);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: linear-gradient(90deg, #1d6fa5, #3498db);
+    transform: scale(1.05);
+}
+
+.register-link {
+    margin-top: 12px;
+    display: block;
+    color: #3498db;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+    color: #1d6fa5;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Choose Activity Page styles */
+.activity-card {
+    margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.activity-card img {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+}
+
+.activity-card .card-body {
+    text-align: center;
+    padding: 15px;
+}
+
+.activity-card h5 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.activity-card p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.activity-card .btn {
+    background-color: #3498db;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.activity-card .btn:hover {
+    background-color: #1d6fa5;
+}
+
+/* Grid layout for activities or other content */
+.row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.col-md-4 {
+    width: 30%;
+    min-width: 250px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design for smaller screens */
+@media screen and (max-width: 768px) {
+    .nav-links a {
+        font-size: 14px;
+        margin: 0 8px;
+    }
+
+    .container {
+        width: 90%;
+    }
+
+    .col-md-4 {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .login-container {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 20px;
+    }
+
+    .login-container {
+        width: 100%;
+    }
+
+    .activity-card {
+        width: 100%;
+    }
+}
