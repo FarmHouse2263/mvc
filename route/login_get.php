@@ -1,4 +1,4 @@
 <?php
-renderView('login_get', [], true); // ไม่แสดง header
+renderView('login_get');
 
 ?>

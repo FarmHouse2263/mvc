@@ -1,45 +1,68 @@
 <?php
-
-// ฟังก์ชันตรวจสอบการเข้าสู่ระบบ
-function login($username, $password): bool
+function register($first_name, $last_name, $email, $password, $phone, $date, $user_type)
 {
-    // เชื่อมต่อกับฐานข้อมูล
     $conn = getConnection();
+    $check_sql = "SELECT * FROM userss WHERE email = ?";
+    $stmt = $conn->prepare($check_sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-    // คำสั่ง SQL เพื่อตรวจสอบผู้ใช้ในฐานข้อมูล
-    $sql = "SELECT * FROM users WHERE username = ?"; // เรียก table users
+    if ($stmt->num_rows > 0) {
+        return "อีเมลนี้ถูกใช้งานแล้ว!";
+    }
 
-    // เตรียมคำสั่ง SQL
+    $check_empty = "SELECT COUNT(*) FROM userss";
+    $result = $conn->query($check_empty);
+    $row = $result->fetch_array();
+
+    if ($row[0] == 0) {
+        $conn->query("ALTER TABLE userss AUTO_INCREMENT = 1");
+    }
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO userss (first_name, last_name, email, password, phone, date, user_type) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $username);  //เพื่อหลีกเลี่ยง SQL Injection
+    $stmt->bind_param("sssssss", $first_name, $last_name, $email, $hashed_password, $phone, $date, $user_type);
+
+    if ($stmt->execute()) {
+        return "ลงทะเบียนสำเร็จ!";
+    } else {
+        return "เกิดข้อผิดพลาด: " . $stmt->error;
+    }
+}
+
+function login($email, $password): bool
+{
+    $conn = getConnection();
+    $sql = "SELECT * FROM userss WHERE email = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // หากพบผู้ใช้
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
 
-        // ตรวจสอบรหัสผ่าน
         if (password_verify($password, $user['password'])) {
-            // ถ้ารหัสผ่านถูกต้อง, คืนค่าผู้ใช้
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['first_name'] = $user['first_name'];
+            $_SESSION['last_name'] = $user['last_name'];
+            $_SESSION['email'] = $user['email'];
             $_SESSION['logged_in'] = true;
             return true;
         }
     }
-
-    // ถ้าการตรวจสอบไม่ผ่าน
     return false;
 }
-
-// ฟังก์ชันตรวจสอบว่า user เข้าสู่ระบบหรือยัง
 function isLoggedIn(): bool
 {
     return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
 }
-
-// ฟังก์ชันตรวจสอบว่า user มีสิทธิ์เข้าถึงหรือไม่
 function checkLogin()
 {
     if (!isLoggedIn()) {
@@ -48,25 +71,21 @@ function checkLogin()
     }
 }
 
-// ฟังก์ชัน logout
 function logout()
 {
     session_start();
-    session_unset();  // ล้างค่าทุกตัวแปรใน session
-    session_destroy();  // ลบ session
+    session_unset();
+    session_destroy();
     header('Location: /login');
     exit();
 }
 
-
+// ฟังก์ชันเพื่อดึงข้อมูลอีเมลของผู้ใช้จาก session
 function getEmail()
 {
-    session_start(); // เรียก session_start() เพื่อเข้าถึง $_SESSION
-
     if (isset($_SESSION['email'])) {
-        return ['email' => $_SESSION['email']]; // return อีเมลเป็น array
+        return $_SESSION['email']; // คืนค่าอีเมล
     }
 
-    return null; // ถ้าไม่มีอีเมล ให้ return null
+    return null; // ถ้าไม่มีอีเมลใน session ให้ return null
 }
-

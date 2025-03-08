@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="css\all.css"> -->
     <title>เข้าสู่ระบบ</title>
     <style>
         * {
@@ -44,7 +43,6 @@
             width: 320px;
             animation: fadeIn 0.8s ease-in-out;
             margin-top: 100px;
-            /* Add margin to push down the login container */
         }
 
         h2 {
@@ -92,7 +90,6 @@
             color: #1d6fa5;
         }
 
-        /* Animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -113,7 +110,7 @@
     <div class="login-container">
         <h2>เข้าสู่ระบบ</h2>
         <form action="/login" method="post">
-            <input href="https://icons.veryicon.com/png/o/miscellaneous/icon-8/my-account-5.png" type="text" name="username" placeholder="ชื่อผู้ใช้" required>
+            <input type="email" name="email" placeholder="อีเมล" required>
             <input type="password" name="password" placeholder="รหัสผ่าน" required>
             <button type="submit" class="btn">เข้าสู่ระบบ</button>
         </form>

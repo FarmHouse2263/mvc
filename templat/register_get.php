@@ -20,7 +20,7 @@ error_reporting(E_ALL);
 
         body {
             background: linear-gradient(to right, #74ebd5, #acb6e5);
-            display: flex;  
+            display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -111,15 +111,22 @@ error_reporting(E_ALL);
 <body>
     <div class="register-container">
         <h2>สมัครสมาชิก</h2>
-        <form action="/register" method="post">
-            <input type="text" name="username" placeholder="ชื่อผู้ใช้" required>
+        <form action="/register" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($activity['id'] ?? '') ?>">
+            <input type="text" name="first_name" placeholder="ชื่อจริง" required>
+            <input type="text" name="last_name" placeholder="นามสกุล" required>
             <input type="email" name="email" placeholder="อีเมล" required>
             <input type="password" name="password" placeholder="รหัสผ่าน" required>
-            <input type="password" name="confirm_password" placeholder="ยืนยันรหัสผ่าน" required>
+            <input type="tel" name="phone" placeholder="หมายเลขโทรศัพท์" required>
             <input type="date" name="birthday" placeholder="วันเกิด" required>
-            <input type="tel" name="phone_number" placeholder="หมายเลขโทรศัพท์" required>
+            <select name="user_type" required>
+                <option value="men">ชาย</option>
+                <option value="women">หญิง</option>
+            </select>
+            <input type="file" name="image" accept="image/*">
             <button type="submit" class="btn">สมัครสมาชิก</button>
         </form>
+
         <a href="/login" class="login-link">มีบัญชีแล้ว? เข้าสู่ระบบ</a>
     </div>
 </body>

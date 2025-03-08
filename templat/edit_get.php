@@ -1,3 +1,42 @@
+<?php
+// เริ่มการเชื่อมต่อฐานข้อมูล
+require_once __DIR__ . '/../includes/db.php'; // เส้นทางของไฟล์การเชื่อมต่อฐานข้อมูล
+
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    die("ไม่พบรหัสกิจกรรม");
+}
+
+$activity_id = $_GET['id'];
+
+// เชื่อมต่อกับฐานข้อมูล
+$mysqli = getConnection();
+
+if ($mysqli->connect_error) {
+    die("การเชื่อมต่อฐานข้อมูลล้มเหลว: " . $mysqli->connect_error);
+}
+
+// ดึงข้อมูลกิจกรรมจากฐานข้อมูล
+$sql = "SELECT * FROM activity WHERE aid = ?";
+$stmt = $mysqli->prepare($sql);
+
+if ($stmt === false) {
+    die("การเตรียมคำสั่ง SQL ล้มเหลว: " . $mysqli->error);
+}
+
+$stmt->bind_param('i', $activity_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// ตรวจสอบว่ามีกิจกรรมในฐานข้อมูลหรือไม่
+if ($result->num_rows === 0) {
+    die("ไม่พบกิจกรรมที่มีรหัสนี้");
+}
+
+$activity = $result->fetch_assoc();
+
+$stmt->close();
+$mysqli->close();
+?>
 <!DOCTYPE html>
 <html lang="th">
 
@@ -10,27 +49,37 @@
 </head>
 
 <body>
-    <?php
-    $activitise = getActivities();
-    ?>
-    <div class="container mt-5">
-        <h2 class="text-center">แก้ไขกิจกรรม</h2>
-        <div class="card shadow p-4">
-            <form action="/edit" method="POST">
-                <div class="mb-3">
-                    <label class="form-label">ชื่อกิจกรรม</label>
-                    <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($activity['name'] ?? '') ?>" required>
+<div class="container mt-5">
+        <form action="edit" method="POST">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($activity['aid'] ?? '') ?>">
+            <div class="mb-3">
+                <label for="activity_name" class="form-label">ชื่อกิจกรรม</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
 
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">รายละเอียด</label>
-                    <textarea name="description" class="form-control" rows="4" required><?= htmlspecialchars($activity['description'] ?? '') ?></textarea>
+            <div class="mb-3">
+                <label for="activity_description" class="form-label">รายละเอียดกิจกรรม</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            </div>
 
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">วันที่</label>
-                    <input type="date" name="created_at" class="form-control" value="<?= htmlspecialchars($activity['created_at'] ?? '') ?>" required>
-                </div>
+            <div class="mb-3">
+                <label for="activity_image" class="form-label">ลิงก์ภาพกิจกรรม</label>
+                <input type="url" class="form-control" id="image" name="image" required>
+            </div>
+
+            
+
+            <div class="mb-3">
+                <label for="start_date" class="form-label">วันที่เริ่มกิจกรรม</label>
+                <input type="date" class="form-control" id="start_date" name="start_date" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="end_date" class="form-label">วันที่สิ้นสุดกิจกรรม</label>
+                <input type="date" class="form-control" id="end_date" name="end_date" required>
+            </div>
+
+
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> บันทึก</button>
                     <a href="/Choose_activity" class="btn btn-secondary"><i class="bi bi-x-circle"></i> ยกเลิก</a>
@@ -50,7 +99,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
