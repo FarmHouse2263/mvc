@@ -1,9 +1,12 @@
 <?php
-// ดึงข้อมูลกิจกรรม
-$activitise = getActivities();
+$activitise = getActivities(); 
+if (isset($_GET['deleted']) && $_GET['deleted'] == 'success'): ?>
+    <div class="alert alert-success" role="alert">
+        กิจกรรมถูกลบสำเร็จ
+    </div>
+<?php endif;
 
-// ดึงข้อมูลผู้ใช้จากฟังก์ชัน email
-$users = email($email);
+renderView('Choose_activity_get', ['activitise' => $activitise]);
 
-// ส่งข้อมูลทั้งหมดไปยัง view
-renderView('Choose_activity_get', ['activitise' => $activitise,'users' => $users]);
+
+?>

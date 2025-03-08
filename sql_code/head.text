@@ -1,3 +1,5 @@
+// หน้า header แบบเมนูมีสามขีด
+
 <!DOCTYPE html>
 <html lang="th">
 
@@ -65,7 +67,8 @@
         .nav-links {
             position: fixed;
             top: 0;
-            right: -250px; /* ซ่อนเมนูทางขวา */
+            right: -250px;
+            /* ซ่อนเมนูทางขวา */
             width: 250px;
             height: 100%;
             background: #2c3e50;
@@ -114,9 +117,18 @@
 </head>
 
 <body>
+    <?php
+    // $users = getEmail('email');
+    // if ($users !== false) {
+    //     $userEmail = htmlspecialchars($users['email']);
+    // } else {
+    //     $userEmail = 'ไม่พบข้อมูลผู้ใช้';
+    // }
 
+    ?>
     <header>
         <h1>ระบบกิจกรรม</h1>
+        <!-- <td><?= htmlspecialchars($users['email']) ?></td> -->
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -128,24 +140,36 @@
     <nav class="nav-links" id="navMenu">
         <span class="close-btn" onclick="toggleMenu()">&times;</span>
         <?php
+        // ดึงเฉพาะชื่อไฟล์เท่านั้น ไม่รวมพาธ
         $current_page = basename($_SERVER['PHP_SELF']);
-        if ($current_page === "templat/home_get.php") { ?>
+
+        // หรือถ้าคุณกำลังใช้ URL path เพื่อระบุหน้า
+        $request_uri = $_SERVER['REQUEST_URI'];
+        $uri_path = parse_url($request_uri, PHP_URL_PATH);
+        $uri_segments = explode('/', trim($uri_path, '/'));
+        $current_route = empty($uri_segments[0]) ? 'home' : $uri_segments[0];
+
+        // ตรวจสอบตามเส้นทาง URL แทน
+        if ($current_route === "home") { ?>
             <a href="/">หน้าแรก</a>
             <a href="/login">เข้าสู่ระบบ</a>
             <a href="/register">สมัครสมาชิก</a>
             <a href="/activities">เพิ่มกิจกรรม</a>
-        <?php } elseif ($current_page === "templat/login_get.php") { ?>
+        <?php } elseif ($current_route === "login") { ?>
             <a href="/">หน้าแรก</a>
             <a href="/register">สมัครสมาชิก</a>
-        <?php } elseif ($current_page === "templat/Choose_activity_get.php") { ?>
-            <a href="/">หน้าแรก</a>
-            <a href="/events">อีเวนต์</a>
-            <a href="/schedule">ตารางกิจกรรม</a>
+        <?php } elseif ($current_route === "register") { ?>
+            <a href="/home">หน้าแรก</a>
             <a href="/login">เข้าสู่ระบบ</a>
-        <?php } elseif ($current_page === "templat/register_get.php") { ?>
-            <a href="/">หน้าแรก</a>
-            <a href="/login">เข้าสู่ระบบ</a>
+        <?php } elseif ($current_route === "activities") { ?>
+            <a href="/home">หน้าแรก</a>
+
+        <?php } elseif ($current_route === "Choose_activity") { ?>
+            <a href="/home">หน้าแรก</a>
+
+            <!-- เมนูอื่นๆ ตามต้องการ -->
         <?php } else { ?>
+            <!-- เมนูเริ่มต้น -->
             <a href="/">หน้าแรก</a>
             <a href="/login">เข้าสู่ระบบ</a>
             <a href="/register">สมัครสมาชิก</a>

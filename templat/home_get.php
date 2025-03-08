@@ -19,36 +19,7 @@
             text-align: center;
         }
 
-        header {
-            background: linear-gradient(90deg, #3498db, #1d6fa5);
-            color: white;
-            padding: 15px;
-            font-size: 24px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px 15px;
-            transition: all 0.3s ease;
-        }
-
-        nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-        }
-
-        main {
-            padding: 50px 20px;
-        }
+       
 
         .container {
             max-width: 800px;
@@ -98,12 +69,10 @@
 </head>
 
 <body>
-    <main>
         <div class="container">
             <h1>ยินดีต้อนรับ!</h1>
             <p>เว็บไซต์ของเรามีกิจกรรมมากมายที่น่าสนใจ</p>
         </div>
-    </main>
 
     <footer>
         &copy; 2025 My Website | All Rights Reserved

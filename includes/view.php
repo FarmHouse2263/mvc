@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 function renderView(string $template, array $data = []): void
 {
-    // แสดง header เฉพาะเมื่อ $showHeader เป็น true
-    include TEMPLATES_DIR . '/header.php';
-
-    // รวมไฟล์ template ที่ต้องการ
+    extract($data); // แปลง array เป็นตัวแปร เช่น ['email' => 'test@example.com'] → $email = 'test@example.com'
+    
+    include TEMPLATES_DIR . '/header_get.php'; 
     include TEMPLATES_DIR . '/' . $template . '.php';
 }

@@ -1,6 +1,13 @@
 <?php
+// ตรวจสอบสถานะ session ว่ามีการเริ่มต้นหรือยัง
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
+}
+
+// ถ้า user เข้าสู่ระบบแล้ว ให้เปลี่ยนเส้นทางไปยังหน้า Choose_activity
+if (isset($_SESSION['username'])) {
+    header('Location: /Choose_activity'); // เปลี่ยนเส้นทางไปยังหน้า Choose_activity
+    exit();
 }
 
 // เชื่อมต่อฐานข้อมูล
@@ -13,8 +20,8 @@ if ($mysqli->connect_error) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // รับค่าจากฟอร์มเข้าสู่ระบบ
-    $username = 'AA';
-    $password = '12345';
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
     // เช็คการกรอกข้อมูล
     if (empty($username) || empty($password)) {

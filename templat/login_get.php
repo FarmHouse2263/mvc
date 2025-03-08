@@ -35,26 +35,6 @@
             z-index: 1;
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        .nav-links {
-            margin-top: 10px;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 16px;
-        }
-
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-
         .login-container {
             background: white;
             padding: 25px;
@@ -128,13 +108,6 @@
 </head>
 
 <body>
-    <!-- ส่วนของ Header -->
-    <header>
-        <div class="nav-links">
-            <a href="/">หน้าแรก</a>
-            <a href="/login">เข้าสู่ระบบ</a>   
-        </div>  
-    </header>
 
     <!-- ส่วนของฟอร์มเข้าสู่ระบบ -->
     <div class="login-container">

@@ -59,29 +59,14 @@ function logout()
 }
 
 
-function email($email)
+function getEmail()
 {
-    // เชื่อมต่อฐานข้อมูล
-    $conn = getConnection();
+    session_start(); // เรียก session_start() เพื่อเข้าถึง $_SESSION
 
-    // สร้างคำสั่ง SQL
-    $sql = "SELECT * FROM users WHERE email = ?";
-
-    // เตรียมคำสั่ง SQL
-    $stmt = $conn->prepare($sql);
-
-    // ผูกค่าพารามิเตอร์
-    $stmt->bind_param('s', $email);  // สำหรับ mysqli ใช้ bind_param()
-
-    // Execute คำสั่ง SQL
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // ตรวจสอบผลลัพธ์
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        return $user['email'];
-    } else {
-        return false;
+    if (isset($_SESSION['email'])) {
+        return ['email' => $_SESSION['email']]; // return อีเมลเป็น array
     }
+
+    return null; // ถ้าไม่มีอีเมล ให้ return null
 }
+

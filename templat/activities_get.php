@@ -16,9 +16,9 @@
 </head>
 
 <body>
-    <header class="bg-primary text-white text-center py-3">
-        <h1>เพิ่มกิจกรรมใหม่</h1>
-    </header>
+<!-- <div class="table-title">
+            <h2>รายการกิจกรรม</h2>
+        </div>     -->
 
     <div class="container mt-5">
         <form action="activities" method="POST">
@@ -35,6 +35,11 @@
             <div class="mb-3">
                 <label for="activity_image" class="form-label">ลิงก์ภาพกิจกรรม</label>
                 <input type="url" class="form-control" id="activity_image" name="activity_image" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="activity_date" class="form-label">วันที่กิจกรรม</label>
+                <input type="date" class="form-control" id="activity_date" name="activity_date" required>
             </div>
 
             <button type="submit" class="btn btn-success">เพิ่มกิจกรรม</button>
