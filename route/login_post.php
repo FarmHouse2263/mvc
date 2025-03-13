@@ -5,7 +5,7 @@
         $password = $_POST['password'];
         if(login($email, $password)) {
             echo 'เข้าสู่ระบบสำเร็จ';
-            header('Location: /Choose_activity');
+            header('Location: /choose_activity');
         }
         else {
             echo 'ใส่ผิดอ่ะ';

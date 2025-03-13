@@ -13,7 +13,7 @@
         <div class="alert alert-success" role="alert">
             กิจกรรมถูกลบสำเร็จ
         </div>
-        <a href="/route/Choose_activity" class="btn btn-primary mt-3">กลับไปยังหน้าหลัก</a>
+        <a href="/route/choose_activity" class="btn btn-primary mt-3">กลับไปยังหน้าหลัก</a>
     </div>
 </body>
 

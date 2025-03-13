@@ -1,36 +1,40 @@
 <?php
-
-if (!isset($_POST['id']) || empty($_POST['id'])) {
-    die("ไม่พบกิจกรรมที่ต้องการแก้ไข");
-}
-
-$id = intval($_POST['id']);
-$activity = getActivityById($id);
-
-if (!$activity) {
-    die("ไม่พบกิจกรรมนี้ในฐานข้อมูล");
-}
-
-
+// ตรวจสอบการส่งข้อมูลจากฟอร์ม
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = trim($_POST['name']);
     $description = trim($_POST['description']);
-    $created_at = $_POST['start_date'];
-    $created_at = $_POST['end_date'];
-    $image = trim($_POST['image'] ?? '');
-
-    if (empty($name) || empty($description) || empty($created_at) || empty($image)) {
-        echo "<script>alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');</script>";
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    
+    // รับค่าลิ้งรูปภาพที่ส่งมาเป็น array
+    $images = $_POST['images'] ?? [];
+    
+    // ตรวจสอบว่ามีภาพอย่างน้อย 1 รูป
+    if (empty($images) || !is_array($images) || empty($images[0])) {
+        $_SESSION['error'] = "กรุณาระบุลิงก์รูปภาพอย่างน้อย 1 รูป";
+        header("Location: /edit?id=" . $_POST['id']); // กลับไปที่หน้า edit
+        exit;
+    }
+    
+    // แปลง array ของลิงก์รูปภาพเป็น string คั่นด้วย | เพื่อเก็บในฐานข้อมูล
+    $image_links = implode('|', array_filter($images));
+    
+    // ตรวจสอบข้อมูลที่ได้รับ
+    if (empty($name) || empty($description) || empty($start_date) || empty($end_date) || empty($image_links)) {
+        $_SESSION['error'] = "กรุณากรอกข้อมูลให้ครบทุกช่อง";
+        header("Location: /edit?id=" . $_POST['id']); // กลับไปที่หน้า edit
+        exit;
+    }
+    
+    // เรียกใช้ฟังก์ชันใน Model เพื่ออัพเดทข้อมูล
+    if (updateActivity($_POST['id'], $name, $description, $start_date, $end_date, $image_links)) {
+        $_SESSION['success'] = "แก้ไขกิจกรรมสำเร็จ!";
+        header("Location: /choose_activity");
+        exit;
     } else {
-        if (updateActivity($id, $name, $description, $created_at, $created_at, $image)) {
-            $_SESSION['success'] = "แก้ไขกิจกรรมสำเร็จ!";
-            header("Location: /Choose_activity");
-            exit;
-        } else {
-            $_SESSION['error'] = "เกิดข้อผิดพลาดในการแก้ไขกิจกรรม";
-            header("Location: /activities");
-            exit;
-        }
+        $_SESSION['error'] = "เกิดข้อผิดพลาดในการแก้ไขกิจกรรม";
+        header("Location: /activities");
+        exit;
     }
 }
 ?>

@@ -12,71 +12,149 @@
             padding-top: 50px;
             background-color: #f8f9fa;
             font-family: 'Sarabun', sans-serif;
+            color: #333;
+            line-height: 1.6;
         }
 
         .card-container {
             max-width: 800px;
             margin: auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
             overflow: hidden;
             margin-bottom: 50px;
+            border: none;
+            background-color: #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .card-img-top {
-            height: 20px;
+            height: 250px;
             object-fit: cover;
+            border-bottom: 1px solid #eaeaea;
         }
 
         .card-title {
-            color: #0d6efd;
+            color: #2563eb;
             font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
             border-bottom: 2px solid #e9ecef;
             padding-bottom: 15px;
+            position: relative;
+        }
+
+        .card-title:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: #2563eb;
+        }
+
+        .card-body {
+            padding: 30px;
         }
 
         .card-text {
             font-size: 18px;
-            line-height: 1.6;
-            color: #212529;
+            line-height: 1.8;
+            color: #4b5563;
+            text-align: justify;
         }
 
         .detail-item {
             display: flex;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            align-items: center;
         }
 
         .detail-label {
             width: 120px;
-            font-weight: bold;
-            color: #495057;
+            font-weight: 600;
+            color: #374151;
+            font-size: 16px;
         }
 
         .detail-value {
             flex: 1;
+            color: #1f2937;
+            font-size: 16px;
         }
 
         .back-btn {
-            padding: 10px 25px;
+            padding: 12px 30px;
             font-size: 16px;
+            font-weight: 600;
             border-radius: 50px;
-            margin-top: 20px;
+            margin-top: 30px;
+            background-color: #2563eb;
+            border: none;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
         }
 
         .activity-meta {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-left: 5px solid #0d6efd;
+            background-color: #f0f9ff;
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-left: 5px solid #2563eb;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .page-header {
             text-align: center;
-            margin-bottom: 30px;
-            color: #495057;
+            margin-bottom: 40px;
+            color: #1f2937;
+            font-weight: 700;
+            font-size: 32px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .page-header:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #2563eb;
+        }
+
+        .alert {
+            border-radius: 12px;
+            padding: 20px;
+            font-weight: 500;
+            font-size: 18px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h5 {
+            color: #2563eb;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .fas {
+            color: #2563eb;
         }
     </style>
 </head>
@@ -91,7 +169,7 @@
             </div>
         <?php else: ?>
             <div class="card card-container">
-                <img src="<?= htmlspecialchars($activity['image'] ?? 'default.jpg') ?>" class="card-img-top" alt="<?= htmlspecialchars($activity['title'] ?? 'ไม่มีชื่อกิจกรรม') ?>">
+                <img src="<?= htmlspecialchars($activity['images'] ?? 'default.jpg') ?>" class="card-img-top" alt="<?= htmlspecialchars($activity['title'] ?? 'ไม่มีชื่อกิจกรรม') ?>">
 
                 <div class="card-body">
                     <h3 class="card-title"><?= htmlspecialchars($activity['title'] ?? 'ไม่มีชื่อกิจกรรม') ?></h3>
@@ -119,7 +197,7 @@
                     <p class="card-text"><?= nl2br(htmlspecialchars($activity['description'] ?? 'ไม่มีรายละเอียด')) ?></p>
 
                     <div class="text-center mt-4">
-                        <a href="/Choose_activity" class="btn btn-primary back-btn">
+                        <a href="/choose_activity" class="btn btn-primary back-btn">
                             <i class="fas fa-check-circle me-2"></i> เลือกกิจกรรม
                         </a>
                     </div>

@@ -1,10 +1,15 @@
 <?php
 function getConnection(): mysqli
 {
-    $hostname = 'localhost';
-    $dbName = 'demo';
-    $password = 'pj';
-    $username = 'pj';
+    // $hostname = '122.155.18.18';
+    // $dbName = 'activitydf_activitydf';
+    // $username = 'activitydf_activitydf';
+    // $password = 'uSM_8QG8j5g7MLg';
+
+     $hostname = 'localhost';
+     $dbName = 'ooo';
+     $username = 'jjj';
+     $password = 'jjj';
     $conn = new mysqli($hostname, $username, $password, $dbName);
     
     if ($conn->connect_error) {

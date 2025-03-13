@@ -1,7 +1,10 @@
 <?php
-$activitise = getActivities(); 
 
-// ส่งข้อมูลกิจกรรมไปยัง view (templat/edit_get.php)
+$activity = getActivityById($_GET['id'] ?? null);
 
-renderView('edit_get', ['activitise' => $activitise]);
+if (!$activity) {
+    die("ไม่พบกิจกรรม");
+}
+
+renderView('edit_get', ['activity' => $activity]);
 ?>

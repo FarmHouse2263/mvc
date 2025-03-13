@@ -36,6 +36,23 @@
             transform: translateX(-50%);
             z-index: 1000;
         }
+
+        .info-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-box-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
     </style>
     <script>
         function confirmDelete(id) {
@@ -61,7 +78,47 @@
 
 <body>
     <div class="container mt-3">
-        <h2 class="text-center">รายการกิจกรรม</h2>
+        <h2 class="text-center">
+            <span style="background: linear-gradient(to right, #007bff, #00c6ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding: 0 10px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
+                <i class="bi bi-calendar-check me-2"></i>รายการกิจกรรม<i class="bi bi-calendar-check ms-2"></i>
+            </span>
+        </h2>
+        <br> <br> <br>
+
+        <!-- เพิ่มกล่องข้อความ 4 กล่อง -->
+        <div class="row mb-4">
+        <div class="col-md-3">
+    <div class="info-box bg-primary text-white text-center">
+        <a href="/history?id=<?= $_SESSION['id'] ?>">
+            <h5 style="color: white;">ประวัติการขอเข้าร่วมกิจกรรม</h5>
+        </a>
+    </div>
+</div>
+
+
+
+            <div class="col-md-3">
+                <div class="info-box bg-success text-white text-center">
+                    <!-- <i class="bi bi-check-circle info-box-icon"></i> -->
+                    <h5>Request accept</h5>
+                    <!-- <p class="mb-0">พร้อมให้บริการ</p> -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-box bg-warning text-dark text-center">
+                    <!-- <i class="bi bi-clock-history info-box-icon"></i> -->
+                    <h5>กิจกรรมที่เข้าร่วมแล้ว</h5>
+                    <!-- <p class="mb-0">เตรียมพร้อม</p> -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-box bg-info text-white text-center">
+                    <!-- <i class="bi bi-people info-box-icon"></i> -->
+                    <h5>กิจกรรมที่ถูกปฏิเสธ</h5>
+                    <!-- <p class="mb-0">จำนวนผู้สนใจ</p> -->
+                </div>
+            </div>
+        </div>
 
         <?php if (isset($_GET['deleted']) && $_GET['deleted'] == 'success'): ?>
             <div id="alert-box" class="alert alert-success text-center">
@@ -95,18 +152,22 @@
                             <td><?= htmlspecialchars($activity['start_date']) ?></td>
                             <td><?= htmlspecialchars($activity['end_date']) ?></td>
                             <td>
-                                <a href="/edit?id=<?= $activity['aid'] ?>" class="btn btn-success btn-sm">
-                                    <i class="bi bi-pencil-square"></i> แก้ไข
-                                </a>
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete(<?= $activity['aid'] ?>)">
-                                    <i class="bi bi-trash"></i> ลบ
-                                </button>
+                                <?php if ($activity['organizer_id'] == $_SESSION['id']): ?> 
+                                    <a href="/edit?id=<?= $activity['aid'] ?>" class="btn btn-success btn-sm">
+                                        <i class="bi bi-pencil-square"></i> แก้ไข
+                                    </a>
+                                    <button class="btn btn-danger btn-sm" onclick="confirmDelete(<?= $activity['aid'] ?>)">
+                                        <i class="bi bi-trash"></i> ลบ
+                                    </button>
+                                <?php else: ?>
+                                    <p class="text-danger">เจ้าของเท่านั้นจึงจะมีสิทธิ์แก้ไขหรือลบได้</p>
+                                <?php endif; ?>
                                 <script>
                                     function confirmDelete(id) {
                                         if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบกิจกรรมนี้?")) {
                                             window.location.href = "/delete?id=" + id;
                                         }
-                                    }
+                                    }  //155 -170 คือ เอาเช็ค 155 รับค่า id ไว้ใน session แล้วเอามาเปรียบเทียบเอาค่า organizer_id ของเป็นกิจกรรมของใคร 
 
                                     function goToDetail(id) {
                                         window.location.href = "/data?id=" + id;

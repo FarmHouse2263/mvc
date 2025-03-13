@@ -1,6 +1,8 @@
 <?php
 function register($first_name, $last_name, $email, $password, $phone, $date, $user_type)
 {
+
+    
     $conn = getConnection();
     $check_sql = "SELECT * FROM userss WHERE email = ?";
     $stmt = $conn->prepare($check_sql);
@@ -53,12 +55,14 @@ function login($email, $password): bool
             $_SESSION['first_name'] = $user['first_name'];
             $_SESSION['last_name'] = $user['last_name'];
             $_SESSION['email'] = $user['email'];
+            $_SESSION['phone'] = $user['phone']; // เก็บหมายเลขโทรศัพท์
             $_SESSION['logged_in'] = true;
             return true;
         }
     }
     return false;
 }
+
 function isLoggedIn(): bool
 {
     return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
@@ -89,3 +93,21 @@ function getEmail()
 
     return null; // ถ้าไม่มีอีเมลใน session ให้ return null
 }
+
+function get_user_data() {
+    global $conn;
+
+    if (!isset($_SESSION['user_id'])) {
+        return null;
+    }
+
+    $user_id = $_SESSION['id'];
+    $sql = "SELECT first_name, last_name, email, phone, address, profile_image FROM userss WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    return $result->fetch_assoc();
+}
+

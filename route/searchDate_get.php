@@ -1,15 +1,17 @@
 <?php
-$searchTerm = $_GET['search'] ?? '';
+$start_date = $_GET['start_date'];
+$end_date = $_GET['end_date'];
 
-if ($searchTerm) {
-    $activities = searchActivities($searchTerm);
+if ($start_date && $end_date) {
+    $activities = searchActivitiesBydate($start_date,$end_date);
+    $_SESSION['activities'] = $activities;
 } else {
     $activities = getActivities();
 }
 
 if (count($activities) > 0) {
     foreach ($activities as $activity) {
-        header("Location: /data?id=" . $activity['aid']);
+        header('Location: /choose_activity');
         exit(); 
     }
 } else {
