@@ -25,4 +25,6 @@ function renderView(string $templat, array $data = []): void
 
     include $headerPath;
     include $templatePath;
+
+    // include TEMPLATES_DIR . '/closed_for_maintenance.php';
 }

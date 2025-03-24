@@ -1,4 +1,4 @@
 <?php
-renderView('home_get'); // แสดง header
+renderView('home_get');
 
 ?>

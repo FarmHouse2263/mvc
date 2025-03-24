@@ -10,59 +10,63 @@
 </head>
 
 <body>
-<div class="container mt-5">
-    <form action="/edit" method="POST">
-        <input type="hidden" name="id" value="<?= $activity['aid'] ?>">
+    <div class="container mt-5">
+        <form action="/edit" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?= $activity['aid'] ?>">
+            <!-- เพิ่ม hidden field เพื่อเก็บชื่อไฟล์รูปภาพเดิม -->
+            <input type="hidden" name="current_image" value="<?= htmlspecialchars($activity['image']) ?>">
 
-        <div class="mb-3">
-            <label for="activity_name" class="form-label">ชื่อกิจกรรม</label>
-            <input type="text" class="form-control" id="name" name="name" value="<?= $activity['title'] ?>" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="activity_description" class="form-label">รายละเอียดกิจกรรม</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required><?= $activity['description'] ?></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label for="activity_image" class="form-label">ลิงก์ภาพกิจกรรม</label>
-            <input type="url" class="form-control" id="image" name="image" value="<?= $activity['image'] ?>" required>
-        </div>
-
-        <div class="mb-3">
-    <label for="start_date" class="form-label">วันที่เริ่มกิจกรรม</label>
-    <!-- ใช้ datetime-local แทน date เพื่อให้รองรับการแสดงทั้งวันที่และเวลา -->
-    <input type="datetime-local" class="form-control" id="start_date" name="start_date" 
-           value="<?= date('Y-m-d\TH:i', strtotime($activity['start_date'])) ?>" required>
-</div>
-
-<div class="mb-3">
-    <label for="end_date" class="form-label">วันที่สิ้นสุดกิจกรรม</label>
-    <!-- ใช้ datetime-local แทน date เพื่อให้รองรับการแสดงทั้งวันที่และเวลา -->
-    <input type="datetime-local" class="form-control" id="end_date" name="end_date" 
-           value="<?= date('Y-m-d\TH:i', strtotime($activity['end_date'])) ?>" required>
-</div>
-
-
-
-        <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> บันทึก</button>
-            <a href="/choose_activity" class="btn btn-secondary"><i class="bi bi-x-circle"></i> ยกเลิก</a>
-        </div>
-    </form>
-</div>
-
-<!-- Toast แจ้งเตือน -->
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
-    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body">
-                ✅ แก้ไขกิจกรรมสำเร็จ!
+            <div class="mb-3">
+                <label for="activity_name" class="form-label">ชื่อกิจกรรม</label>
+                <input type="text" class="form-control" id="name" name="name" value="<?= htmlspecialchars($activity['title']) ?>" required>
             </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+
+            <div class="mb-3">
+                <label for="activity_description" class="form-label">รายละเอียดกิจกรรม</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required><?= htmlspecialchars($activity['description']) ?></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="activity_image" class="form-label">ภาพกิจกรรม</label>
+                <input type="file" class="form-control" id="new_image" name="new_image">
+                <small class="form-text text-muted">เลือกรูปภาพใหม่หากต้องการเปลี่ยน หากไม่เลือก จะใช้รูปภาพเดิม</small>
+                <?php if (!empty($activity['image'])): ?>
+                    <div class="mt-2">
+                        <img src="<?= htmlspecialchars($activity['image']) ?>" alt="Current Image" class="img-thumbnail" width="200">
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="mb-3">
+                <label for="start_date" class="form-label">วันที่เริ่มกิจกรรม</label>
+                <input type="datetime-local" class="form-control" id="start_date" name="start_date"
+                    value="<?= date('Y-m-d\TH:i', strtotime($activity['start_date'])) ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="end_date" class="form-label">วันที่สิ้นสุดกิจกรรม</label>
+                <input type="datetime-local" class="form-control" id="end_date" name="end_date"
+                    value="<?= date('Y-m-d\TH:i', strtotime($activity['end_date'])) ?>" required>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> บันทึก</button>
+                <a href="/choose_activity" class="btn btn-secondary"><i class="bi bi-x-circle"></i> ยกเลิก</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Toast แจ้งเตือน -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
+        <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    แก้ไขกิจกรรมสำเร็จ!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
         </div>
     </div>
-</div>
 </body>
 
 </html>

@@ -26,24 +26,9 @@ error_reporting(E_ALL);
             height: 100vh;
         }
 
-        header {
-            background: linear-gradient(90deg, #3498db, #1d6fa5);
-            color: white;
-            width: 100%;
-            padding: 15px;
-            text-align: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
 
         .register-container {
+            margin-top: 30vh;
             background: white;
             padding: 20px;
             border-radius: 10px;
@@ -123,7 +108,7 @@ error_reporting(E_ALL);
                 <option value="men">ชาย</option>
                 <option value="women">หญิง</option>
             </select>
-            <input type="file" name="image" accept="image/*">
+            <input type="file" name="image[]" accept="image/*">
             <button type="submit" class="btn">สมัครสมาชิก</button>
         </form>
 
@@ -132,3 +117,4 @@ error_reporting(E_ALL);
 </body>
 
 </html>
+

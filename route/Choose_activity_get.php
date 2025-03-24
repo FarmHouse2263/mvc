@@ -8,12 +8,6 @@ if (isset($_SESSION['activities']) && !empty($_SESSION['activities'])) {
     $activitise = getActivities();
 }
 
-if (isset($_GET['deleted']) && $_GET['deleted'] == 'success'): ?>
-    <div class="alert alert-success" role="alert">
-        กิจกรรมถูกลบสำเร็จ
-    </div>
-<?php endif;
-
 renderView('choose_activity_get', ['activitise' => $activitise]);
 unset($_SESSION['activities']);
 ?>

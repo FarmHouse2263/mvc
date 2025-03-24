@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 function getActivities()
 {
     $conn = getConnection();
@@ -8,15 +10,13 @@ function getActivities()
     return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 }
 
-function getData()
+function getData($id)
 {
     $conn = getConnection();
 
     if (!$conn) {
         die("Database connection variable (\$conn) not found.");
     }
-
-    $id = $_GET['id'] ?? null;
 
     if (!$id) {
         die("ไม่พบกิจกรรม");
@@ -56,25 +56,57 @@ function getActivityById($aid)
 function updateActivity($aid, $title, $description, $start_date, $end_date, $image)
 {
     $conn = getConnection();
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
     $sql = "UPDATE activity SET title = ?, description = ?, start_date = ?, end_date = ?, image = ? WHERE aid = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Error preparing statement: " . $conn->error);
+    }
+
     $stmt->bind_param("sssssi", $title, $description, $start_date, $end_date, $image, $aid);
-    $success = $stmt->execute();
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
     $stmt->close();
-    return $success;
+    return true; // หรือ false หากเกิดข้อผิดพลาด
 }
 
 
-function addActivity($title, $description, $start_date, $end_date, $image, $org_id)
-{   
+
+
+function addActivity($title, $description, $start_date, $end_date, $image_string, $org_id)
+{
+    // เชื่อมต่อฐานข้อมูล
     $conn = getConnection();
-    $sql = "INSERT INTO activity (title, description, start_date, end_date, image, organizer_id) VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssi", $title, $description, $start_date, $end_date, $image, $org_id);
-    $success = $stmt->execute();
+
+    // ตรวจสอบการเชื่อมต่อ
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // เตรียมคำสั่ง SQL เพื่อเพิ่มข้อมูล
+    $stmt = $conn->prepare("INSERT INTO activity (title, description, start_date, end_date, image, 	organizer_id	) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssi", $title, $description, $start_date, $end_date, $image_string, $org_id);
+
+    // ตรวจสอบการเพิ่มข้อมูล
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        echo "Error: " . $stmt->error;
+        return false;
+    }
+
+    // ปิดการเชื่อมต่อ
     $stmt->close();
-    return $success ? "เพิ่มข้อมูลสำเร็จ!" : "เกิดข้อผิดพลาด: " . $conn->error;
+    $conn->close();
 }
+
+
 
 function deleteActivity($id)
 {
@@ -148,4 +180,37 @@ function searchActivitiesBydate($start_date, $end_date)
     $stmt->close();
 
     return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : [];
+}
+
+
+// ฟังก์ชันสำหรับตรวจสอบและสร้างโฟลเดอร์หากไม่มีก
+function createUploadDir(string $uploadDir): bool
+{
+    if (!file_exists($uploadDir)) {
+        return mkdir($uploadDir, 0755, true);
+    }
+    return true;
+}
+
+// ฟังก์ชันสำหรับตรวจสอบและอัปโหลดไฟล์
+function uploadFiles(array $files, string $uploadDir): array
+{
+    $uploaded_files = [];
+    foreach ($files['tmp_name'] as $key => $tmp_name) {
+        $fileName = basename($files['name'][$key]);
+        $targetPath = $uploadDir . uniqid() . '-' . $fileName; // ตั้งชื่อไฟล์ให้ไม่ซ้ำกัน
+
+        // ตรวจสอบขนาดไฟล์และประเภทไฟล์ (ตัวอย่างตรวจสอบว่าไฟล์เป็น .jpg หรือ .png)
+        $allowedTypes = ['image/jpeg', 'image/png'];
+        $fileType = mime_content_type($tmp_name);
+        if (!in_array($fileType, $allowedTypes)) {
+            continue;  // ข้ามไฟล์ที่ไม่ตรงตามประเภท
+        }
+
+        // ย้ายไฟล์ไปยังโฟลเดอร์ที่กำหนด
+        if (move_uploaded_file($tmp_name, $targetPath)) {
+            $uploaded_files[] = $targetPath; // เก็บเส้นทางไฟล์ที่อัปโหลดสำเร็จ
+        }
+    }
+    return $uploaded_files;
 }

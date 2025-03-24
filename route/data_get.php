@@ -1,5 +1,6 @@
 <?php
-$activity = getData();
+$id = $_GET['id'] ?? null;
+$activity = getData($id);
 if (!$activity) {
     die("ไม่พบข้อมูลกิจกรรม");
 }

@@ -31,12 +31,6 @@
             animation: fadeIn 0.8s ease-in-out;
         }
 
-        h1 {
-            font-size: 28px;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
         p {
             font-size: 18px;
             color: #555;

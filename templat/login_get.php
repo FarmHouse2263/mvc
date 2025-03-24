@@ -22,18 +22,6 @@
             flex-direction: column;
         }
 
-        header {
-            background: linear-gradient(90deg, #3498db, #1d6fa5);
-            color: white;
-            width: 100%;
-            padding: 15px;
-            text-align: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
         .login-container {
             background: white;
             padding: 25px;

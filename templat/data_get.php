@@ -16,6 +16,10 @@
             line-height: 1.6;
         }
 
+        .container {
+            margin-top: 10vh;
+        }
+
         .card-container {
             max-width: 800px;
             margin: auto;
@@ -26,11 +30,6 @@
             border: none;
             background-color: #ffffff;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .card-img-top {
@@ -126,17 +125,6 @@
             padding-bottom: 15px;
         }
 
-        .page-header:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background-color: #2563eb;
-        }
-
         .alert {
             border-radius: 12px;
             padding: 20px;
@@ -156,6 +144,13 @@
         .fas {
             color: #2563eb;
         }
+
+        .card-img-top {
+            width: 100%;    
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 1px solid #eaeaea;
+        }
     </style>
 </head>
 
@@ -169,7 +164,7 @@
             </div>
         <?php else: ?>
             <div class="card card-container">
-                <img src="<?= htmlspecialchars($activity['images'] ?? 'default.jpg') ?>" class="card-img-top" alt="<?= htmlspecialchars($activity['title'] ?? 'ไม่มีชื่อกิจกรรม') ?>">
+                <img src="<?= htmlspecialchars($activity['image']) ?>" class="card-img-top" alt="Activity Image">
 
                 <div class="card-body">
                     <h3 class="card-title"><?= htmlspecialchars($activity['title'] ?? 'ไม่มีชื่อกิจกรรม') ?></h3>
@@ -197,10 +192,21 @@
                     <p class="card-text"><?= nl2br(htmlspecialchars($activity['description'] ?? 'ไม่มีรายละเอียด')) ?></p>
 
                     <div class="text-center mt-4">
-                        <a href="/choose_activity" class="btn btn-primary back-btn">
-                            <i class="fas fa-check-circle me-2"></i> เลือกกิจกรรม
-                        </a>
+                        <form action="/history" method="POST">
+                            <input type="hidden" name="activity_id" value="<?= htmlspecialchars($activity['aid']) ?>">
+                            <input type="hidden" name="rid" value="<?= htmlspecialchars($_SESSION['id']) ?>">
+                            <input type="hidden" name="title" value="<?= htmlspecialchars($activity['title']) ?>">
+                            <input type="hidden" name="start_date" value="<?= htmlspecialchars($activity['start_date']) ?>">
+                            <input type="hidden" name="end_date" value="<?= htmlspecialchars($activity['end_date']) ?>">
+                            <input type="hidden" name="location" value="<?= htmlspecialchars($activity['location'] ?? '') ?>">
+                            <input type="hidden" name="description" value="<?= htmlspecialchars($activity['description'] ?? '') ?>">
+
+                            <button type="submit" class="btn btn-primary back-btn">
+                                <i class="fas fa-check-circle me-2"></i> เลือกกิจกรรม
+                            </button>
+                        </form>
                     </div>
+
                 </div>
             </div>
         <?php endif; ?>

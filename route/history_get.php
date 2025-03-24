@@ -1,14 +1,16 @@
 <?php
-$uid = $_GET['id'];  // รับค่า id จาก URL
+$activitise = getUserActivities($_SESSION['id']);
+$approval_status = getAllApprovaldata($_SESSION['id']);
+// unset($_SESSION['selected_activity']);
+// $approval_status = getApprovalStatus($_SESSION['selected_activity']);
 
-if ($uid) {
-    // ดึงข้อมูลกิจกรรมพร้อมข้อมูล history
-    $activitises = filterActByUid($uid);
-    if (($activitises)) {
-        renderView('history_get', ['activitise' => $activitises]);
-    }else{
-        echo "<p>ไม่พบข้อมูลประวัติการขอเข้าร่วมกิจกรรม</p>";
-    }
-} else {
-    echo "<p>ไม่พบกิจกรรมที่ขอเข้าร่วม</p>";
-}
+// echo "<pre>กิจกรรม: ";
+// var_dump($activitise);
+// echo "</pre>";
+
+// echo "<pre>สถานะอนุมัติ: ";
+// var_dump($approval_status);
+// echo "</pre>";
+
+renderView('history_get', ['activitise' => $activitise, 'approval_status' => $approval_status]);
+

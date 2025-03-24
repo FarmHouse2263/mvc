@@ -81,14 +81,23 @@
 
         /* ส่วนของการค้นหา */
         .search-container {
+            width: auto;
+            max-width: 220px;
+            margin: 0 15px;
+        }
+
+        .search-container form {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 5px 10px;
-            margin: 0 15px;
-            width: auto;
-            max-width: 300px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            border-radius: 18px;
+            padding: 4px 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-container form:hover {
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .search-container input {
@@ -97,12 +106,14 @@
             outline: none;
             color: white;
             width: 100%;
-            font-size: 14px;
-            padding: 5px;
+            font-size: 13px;
+            padding: 4px;
+            transition: all 0.3s ease;
         }
 
         .search-container input::placeholder {
             color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
         }
 
         .search-container button {
@@ -110,6 +121,24 @@
             border: none;
             cursor: pointer;
             color: white;
+            padding: 0 4px;
+            margin-left: 5px;
+            opacity: 0.8;
+            transition: all 0.2s ease;
+        }
+
+        .search-container button:hover {
+            opacity: 1;
+        }
+
+        .search-container button i {
+            font-size: 14px;
+        }
+
+        /* เพิ่มเอฟเฟกต์โฟกัส */
+        .search-container form:focus-within {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4);
         }
 
         /* ส่วนของโปรไฟล์ */
@@ -170,42 +199,8 @@
         }
 
         /* ส่วนของการค้นหาตามวันที่ */
-        .date-search {
-            display: flex;
-            align-items: center;
-            margin: 0 15px;
-        }
 
-        .date-search .form-control {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 8px;
-            border-radius: 4px;
-        }
 
-        .date-search .btn {
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            margin-left: 5px;
-        }
-
-        .date-search .btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .date-search label {
-            color: white;
-            font-size: 12px;
-            margin-bottom: 2px;
-            display: block;
-        }
 
         /* Hamburger Menu สำหรับมือถือ */
         .menu-toggle {
@@ -277,7 +272,8 @@
                 left: 0;
             }
 
-            .nav-left, .nav-right {
+            .nav-left,
+            .nav-right {
                 flex-direction: column;
                 width: 100%;
                 align-items: flex-start;
@@ -296,30 +292,6 @@
                 box-sizing: border-box;
             }
 
-            .date-search {
-                width: 100%;
-                flex-direction: column;
-                margin: 10px 20px;
-                align-items: flex-start;
-            }
-
-            .date-search .mb-3 {
-                width: 100%;
-                max-width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .date-search .form-control {
-                width: 100%;
-            }
-
-            .date-search .btn {
-                width: 100%;
-                justify-content: center;
-                margin-left: 0;
-                margin-top: 10px;
-            }
-
             .profile-container {
                 width: 100%;
                 justify-content: flex-start;
@@ -334,6 +306,120 @@
                 right: 5%;
             }
         }
+
+        /* ส่วนของการค้นหาตามวันที่ */
+        /* ส่วนของการค้นหาตามวันที่ */
+        .date-search {
+            margin: 0 15px;
+        }
+
+
+
+        .date-search .mb-3 {
+            max-width: 140px;
+            /* ลดขนาดให้กะทัดรัด */
+            margin-bottom: 0;
+        }
+
+        .date-search label {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .date-search .form-control {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 6px 8px;
+            /* ลด padding เพื่อให้ขนาดเล็กลง */
+            border-radius: 5px;
+            font-size: 12px;
+            width: 100%;
+            transition: all 0.3s ease;
+            height: 34px;
+            /* ลดความสูงของ input */
+        }
+
+        .date-search .form-control:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .date-search .form-control:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
+        }
+
+        /* ปุ่มค้นหา */
+        .date-search .btn {
+            background: #f1c40f;
+            border: none;
+            color: #333;
+            padding: 6px 14px;
+            /* ลด padding ให้ปุ่มเล็กลง */
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            /* font-weight: 600; */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            height: 34px;
+            /* ให้ความสูงเท่ากับช่อง input */
+        }
+
+
+        .date-search .btn:hover {
+            background: #e1b50e;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .date-search .btn i {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        /* ปรับให้รองรับมือถือ */
+        @media (max-width: 768px) {
+            .date-search form {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 8px;
+            }
+
+            .date-search .mb-3 {
+                max-width: none;
+                margin-bottom: 8px;
+            }
+
+            .date-search .btn {
+                width: 100%;
+                margin-top: 5px;
+            }
+
+            .profile-img {
+            width: 1px;
+            /* ปรับขนาดรูปภาพ */
+            height: 1px;
+            border-radius: 50%;
+            /* ทำให้เป็นวงกลม */
+            object-fit: cover;
+            /* ป้องกันภาพบิดเบี้ยว */
+            border: 3px solid #ddd;
+            /* เพิ่มเส้นขอบ */
+            margin-bottom: 15px;
+        }
+        }
     </style>
 </head>
 
@@ -342,7 +428,7 @@
     <div id="snow-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></div>
 
     <header>
-        <h1>ระบบกิจกรรม</h1>
+        <h1>กิจกรรม</h1>
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -401,22 +487,24 @@
 
                     <!-- ส่วนของการค้นหาตามวันที่ -->
                     <div class="date-search">
-                        <form action="/searchDate" method="GET" class="d-flex flex-wrap align-items-end">
-                            <div class="mb-3" style="max-width: 150px;">
-                                <label for="start_date">วันที่เริ่มกิจกรรม</label>
-                                <input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
+                        <form action="/searchdate" method="GET" class="d-flex align-items-center gap-2">
+                            <div class="position-relative">
+                                <!-- <label for="start_date" class="input-placeholder">วันที่เริ่มกิจกรรม</label> -->
+                                <input type="datetime-local" class="form-control date-input" id="start_date" name="start_date" required>
                             </div>
 
-                            <div class="mb-3" style="max-width: 150px;">
-                                <label for="end_date">วันที่สิ้นสุดกิจกรรม</label>
-                                <input type="datetime-local" class="form-control" id="end_date" name="end_date" required>
+                            <div class="position-relative">
+                                <!-- <label for="end_date" class="input-placeholder">วันที่สิ้นสุดกิจกรรม</label> -->
+                                <input type="datetime-local" class="form-control date-input" id="end_date" name="end_date" required>
                             </div>
 
-                            <button type="submit" class="btn btn-warning">
+                            <button type="submit" class="btn btn-warning search-btn">
                                 <i class="fas fa-search"></i> <span class="ml-2">ค้นหา</span>
                             </button>
                         </form>
                     </div>
+
+
                 <?php } ?>
 
                 <?php if (in_array($current_route, ["activities", "choose_activity", "edit"])) { ?>
@@ -426,12 +514,9 @@
                             <h5 class="text-white"><?= $_SESSION['first_name'] ?></h5>
                         </span>
                         <a href="/profile" class="profile-icon">
-                            <i class="fas fa-user"></i>
+                        <img src="<?= !empty($_SESSION['image']) ? htmlspecialchars($_SESSION['image']) : 'default.jpg' ?>"
+                        alt="Profile Image" class="profile-icon">
                         </a>
-                        <div class="profile-menu">
-                            <a href="/profile"><i class="fas fa-user-circle"></i> โปรไฟล์</a>
-                            <a href="/home"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
-                        </div>
                     </div>
                 <?php } ?>
             </div>
@@ -467,7 +552,7 @@
         // ฟังก์ชันสร้างหิมะตก
         function createSnowflakes() {
             const snowContainer = document.getElementById('snow-container');
-            const snowflakeCount = 150; // จำนวนเกล็ดหิมะ
+            const snowflakeCount = 50; // จำนวนเกล็ดหิมะ
 
             for (let i = 0; i < snowflakeCount; i++) {
                 createSnowflake(snowContainer);
